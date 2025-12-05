@@ -41,12 +41,15 @@ function analyzeSalesData(data, options) {
         throw new Error('Некорректные входные данные');
     }
 
+    if (data.purchase_records.length === 0) {
+        throw new Error('Нет данных по заказам. Расчет бонусов невозможен.');
+    }
+
     // @TODO: Проверка наличия опций
     const { calculateRevenue, calculateBonus } = options;
     if (!calculateRevenue || typeof calculateRevenue !== "function" || !calculateBonus || typeof calculateBonus !== "function") {
         throw new Error('Некорректные опции');
     }
-
 
     // @TODO: Подготовка промежуточных данных для сбора статистики
     const sellerStats = data.sellers.map(seller => ({
